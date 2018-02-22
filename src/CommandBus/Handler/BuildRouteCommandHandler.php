@@ -6,6 +6,10 @@ use Dykyi\CommandBus\Command\BuildRouteCommand;
 use Dykyi\CommandBus\Formatter\ConsoleFormatter;
 use Dykyi\Helpers\TextBuilder;
 use Dykyi\Response\ResponseFactory;
+use Dykyi\Services\CardService\CardRequest;
+use Dykyi\Services\CardService\CardService;
+use Dykyi\Services\CardService\Clients\InMemoryCardClient;
+use Dykyi\Services\CardService\Repository\InMemoryCardRepository;
 use Dykyi\Services\WeatherForecastService\WeatherForecastRequest;
 use Stash\Driver\FileSystem;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,24 +27,22 @@ class BuildRouteCommandHandler
     public function handle(BuildRouteCommand $command)
     {
         try {
-            $request = new WeatherForecastRequest(
+            $request = new CardRequest(
                 $command->getResponseFormat(),
                 $command->getOutputFile()
             );
 
-//            $client = WeatherClientFactory::create(
-//                getenv('API_SERVICE'),
-//                [
-//                    'url' => getenv('API_URL'),
-//                    'key' => getenv('API_KEY')
-//                ]
-//            );
-//
-//            $service = new WeatherForecastService($client, new FileSystem());
-//            $data = $service->execute($request);
+            $service = new CardService(
+                new InMemoryCardRepository(),
+                new InMemoryCardClient(['url' => getenv('API_CLIENT_URL')]),
+                new FileSystem()
+            );
+
+            $route = $service->execute($request);
+            $sortRoute = $service->sort($route);
 
             $responseObject = ResponseFactory::create($request->getResponseFormat());
-            $response = new Response($responseObject->response([]));
+            $response = new Response($responseObject->response($sortRoute));
             $response->send();
 
         } catch (\InvalidArgumentException $exception) {

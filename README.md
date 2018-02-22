@@ -13,7 +13,7 @@ For instance the API should be able to take an unordered set of boarding cards, 
 ## Install
 
 + composer install && composer dumpautoload -o
-+ set URL path in file index.php
++ change URL path to client API in .env file
  
 ## Usage
 ```php

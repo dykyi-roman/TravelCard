@@ -5,7 +5,6 @@ namespace Dykyi\Services\CardService;
 use Dykyi\Services\CardService\Repository\CardRepositoryInterface;
 use Dykyi\Services\Events\Dispatcher;
 use Dykyi\Services\Events\Event\SaveFileInTheStorageEvent;
-use Dykyi\Services\Service;
 use Dykyi\Services\CardService\Clients\CardClientInterface;
 use Dykyi\Services\CardService\Storage\Storage;
 use Stash\Interfaces\DriverInterface;
@@ -38,21 +37,19 @@ class CardService
      */
     public function __construct(CardRepositoryInterface $repository, CardClientInterface $client, DriverInterface $cache)
     {
-        $this->client      = $client;
-        $this->reposistory = $repository;
-        $this->cache       = new Pool($cache);
+        $this->client = $client;
+        $this->repository = $repository;
+        $this->cache = new Pool($cache);
         $this->eventDispatcher = Dispatcher::create();
     }
 
     /**
      * @param CardRequest $request
-     * @return array
+     * @return mixed
      */
-    public function execute(CardRequest $request): array
+    public function execute(CardRequest $request)
     {
-        $result = [];
-//        $data = null;
-//        $item = $this->cache->getItem($request->getC()->getName());
+        //        $item = $this->cache->getItem($request->getC()->getName());
 //        if($item->isMiss()){
 //            $data = $this->client->get($request->getC()->getName());
 //            $item->lock();
@@ -62,25 +59,20 @@ class CardService
 //        }
 //
 //        $result = $this->convert($item->get() ?? $data);
-//        $this->saveToFile($request, $result);
-        return $result;
-    }
 
-    /**
-     * @param array $data
-     * @return array
-     */
-    public function sort(array $data)
-    {
-        //TODO: not finished
-        return [];
+        $cards    = $this->repository->getCards();
+        $sortCard = $this->client->cardSort($cards);
+
+        $this->createSaveToFileEvent($request, $sortCard);
+
+        return $sortCard;
     }
 
     /**
      * @param CardRequest $request
      * @param $data
      */
-    private function saveToFile(CardRequest $request, $data)
+    private function createSaveToFileEvent(CardRequest $request, $data): void
     {
         if (null !== $request->getOutputFile()) {
             $storage = Storage::create($request->getOutputFileExt());

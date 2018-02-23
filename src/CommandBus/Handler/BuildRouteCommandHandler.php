@@ -3,14 +3,11 @@
 namespace Dykyi\CommandBus\Handler;
 
 use Dykyi\CommandBus\Command\BuildRouteCommand;
-use Dykyi\CommandBus\Formatter\ConsoleFormatter;
-use Dykyi\Helpers\TextBuilder;
 use Dykyi\Response\ResponseFactory;
 use Dykyi\Services\CardService\CardRequest;
 use Dykyi\Services\CardService\CardService;
 use Dykyi\Services\CardService\Clients\InMemoryCardClient;
 use Dykyi\Services\CardService\Repository\InMemoryCardRepository;
-use Dykyi\Services\WeatherForecastService\WeatherForecastRequest;
 use Stash\Driver\FileSystem;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -38,11 +35,10 @@ class BuildRouteCommandHandler
                 new FileSystem()
             );
 
-            $route = $service->execute($request);
-            $sortRoute = $service->sort($route);
+            $sortCards = $service->execute($request);
 
             $responseObject = ResponseFactory::create($request->getResponseFormat());
-            $response = new Response($responseObject->response($sortRoute));
+            $response = new Response($responseObject->response($sortCards));
             $response->send();
 
         } catch (\InvalidArgumentException $exception) {

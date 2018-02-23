@@ -9,8 +9,7 @@ namespace Dykyi\Services\CardService\Repository;
 interface CardRepositoryInterface
 {
     /**
-     * @param array $data
      * @return array
      */
-    public function getCards(array $data): array;
+    public function getCards(): array;
 }

@@ -9,8 +9,8 @@ namespace Dykyi\Services\CardService\Clients;
 interface CardClientInterface
 {
     /**
-     * @param string $name
+     * @param array $data
      * @return mixed
      */
-    public function cardSort(string $name);
+    public function cardSort(array $data);
 }

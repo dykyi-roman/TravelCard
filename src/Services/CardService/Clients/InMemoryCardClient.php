@@ -2,8 +2,10 @@
 
 namespace Dykyi\Services\CardService\Clients;
 
+use Dykyi\Model\Card;
 use GuzzleHttp\Client as GuzzleClient;
 use Dykyi\Services\Response\ResponseDataExtractor;
+use Stash\Exception\RuntimeException;
 
 /**
  * Class InMemoryCardClient
@@ -18,26 +20,65 @@ class InMemoryCardClient implements CardClientInterface
         $this->options = $options;
     }
 
-    public function cardSort(string $name)
+    /**
+     * @param array $data
+     * @return array
+     *
+     * @throws \Stash\Exception\RuntimeException
+     */
+    public function cardSort(array $data): array
     {
-        $content = null;
-        $client  = new GuzzleClient();
+        $result = [];
+        $client = new GuzzleClient();
         try {
-            $response = $client->request('GET', $this->options['url'], [
+            $response = $client->request('POST', $this->options['url'], [
                 'query' => [
-                    'q' => $name,
-                    'units' => 'metric',
-                    'APPID' => $this->options['key']
+                    'data' => $this->prepareToRequest($data)
                 ]
             ]);
 
-            if ($response->getStatusCode() === 200)
-            {
+            if ($response->getStatusCode() === 200) {
                 $extractor = new ResponseDataExtractor();
                 $content = $extractor->extract($response);
+                $result = $this->parsingResponce($data, $content);
             }
-        } catch (\Exception $exception) { }
+        } catch (\Exception $exception) {
+            throw new RuntimeException($exception->getMessage());
+        }
 
-        return $content;
+        return $result;
+    }
+
+    /**
+     * @param array $data
+     * @return string
+     */
+    private function prepareToRequest(array $data): string
+    {
+        $temp = [];
+        /** @var Card $card */
+        foreach ($data as $card) {
+            $temp[] = [
+                $card->getRoute()->getFrom()->getName(),
+                $card->getRoute()->getTo()->getName()
+            ];
+        }
+
+        return json_encode($temp);
+    }
+
+    /**
+     * @param array $data
+     * @param array $position
+     * @return array
+     */
+    private function parsingResponce(array $data, array $position)
+    {
+        $newArray = [];
+        foreach ($position as $i) {
+            $newArray[] = $data[$i];
+        }
+
+        return $newArray;
     }
 }

@@ -8,6 +8,7 @@ use Dykyi\Services\CardService\CardRequest;
 use Dykyi\Services\CardService\CardService;
 use Dykyi\Services\CardService\Clients\InMemoryCardClient;
 use Dykyi\Services\CardService\Repository\InMemoryCardRepository;
+use Dykyi\Transformer\Transformer;
 use Stash\Driver\FileSystem;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -38,7 +39,7 @@ class BuildRouteCommandHandler
             $sortCards = $service->execute($request);
 
             $responseObject = ResponseFactory::create($request->getResponseFormat());
-            $response = new Response($responseObject->response($sortCards));
+            $response = new Response($responseObject->response($sortCards, new Transformer()));
             $response->send();
 
         } catch (\InvalidArgumentException $exception) {

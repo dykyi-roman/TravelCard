@@ -14,6 +14,7 @@ use Dykyi\ValueObjects\Route;
  */
 class Transformer implements TransformerInterface
 {
+    const FINISH_LINE = 'You have arrived at your final destination';
     /**
      * @param Transport $transport
      * @return mixed

@@ -62,7 +62,6 @@ class CardService
 
         $cards    = $this->repository->getCards();
         $sortCard = $this->client->cardSort($cards);
-
         $this->createSaveToFileEvent($request, $sortCard);
 
         return $sortCard;
@@ -72,7 +71,7 @@ class CardService
      * @param CardRequest $request
      * @param $data
      */
-    private function createSaveToFileEvent(CardRequest $request, $data): void
+    private function createSaveToFileEvent(CardRequest $request, $data)
     {
         if (null !== $request->getOutputFile()) {
             $storage = Storage::create($request->getOutputFileExt());

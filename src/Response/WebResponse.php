@@ -4,6 +4,9 @@ namespace Dykyi\Response;
 
 use Dykyi\CommandBus\Formatter\HtmlFormatter;
 use Dykyi\Helpers\TextBuilder;
+use Dykyi\Model\Card;
+use Dykyi\Transformer\Transformer;
+use Dykyi\Transformer\TransformerInterface;
 
 /**
  * Class HTMLResponse
@@ -11,13 +14,20 @@ use Dykyi\Helpers\TextBuilder;
  */
 class WebResponse implements ResponseInterface
 {
-    public function response(array $data): string
+    /**
+     * @param array $data
+     * @param TransformerInterface $transformer
+     * @return string
+     */
+    public function response(array $data, TransformerInterface $transformer): string
     {
         $text = TextBuilder::create();
-        foreach ($data as $item)
-        {
-            $text->add($item);
+        /** @var Card $card */
+        foreach ($data as $card) {
+            $text->add($card->toString($transformer));
         }
+        $text->add(Transformer::FINISH_LINE);
+
         return Htmlformatter::create()->format($text);
     }
 }

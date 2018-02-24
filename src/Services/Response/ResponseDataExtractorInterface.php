@@ -6,7 +6,7 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * Interface ResponseDataExtractorInterface
- * @package Dykyi\Services\WeatherForecastService\Response
+ * @package Dykyi\Services\Response
  */
 interface ResponseDataExtractorInterface
 {

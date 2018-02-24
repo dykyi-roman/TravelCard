@@ -15,14 +15,15 @@ use Dykyi\ValueObjects\Route;
 class Transformer implements TransformerInterface
 {
     const FINISH_LINE = 'You have arrived at your final destination';
+
     /**
      * @param Transport $transport
      * @return mixed
      */
     public function transformerTransport(Transport $transport): string
     {
-        $number   = empty($transport->getNumber()) ? '' : ' '. $transport->getNumber();
-        $platform = empty($transport->getPlatform()) ? '' : ', '. $transport->getPlatform().'.';
+        $number = empty($transport->getNumber()) ? '' : ' ' . $transport->getNumber();
+        $platform = empty($transport->getPlatform()) ? '' : ', ' . $transport->getPlatform() . '.';
 
         return $transport->getType() . $number . $platform;
     }
@@ -34,7 +35,7 @@ class Transformer implements TransformerInterface
 
     public function transformerPlace(Place $place): string
     {
-        if ($place->isEmpty()){
+        if ($place->isEmpty()) {
             return 'No seat assignment';
         }
 
@@ -49,25 +50,17 @@ class Transformer implements TransformerInterface
             $card->getTransport()->getPlace()->toString($this) . '.';
     }
 
-    /**'
-     * @param PrinterInterface $obj
-     * @return string
-     */
     public function transformer(PrinterInterface $obj): string
     {
-        if ($obj instanceof Card) {
-            return $this->transformerCard($obj);
-        }
-        if ($obj instanceof Route) {
-            return $this->transformerRoute($obj);
+        try {
+            $reflect = new \ReflectionClass($obj);
+        } catch (\ReflectionException $e) {}
+        $methodName = 'transformer' . $reflect->getShortName();
+
+        if (method_exists($this, $methodName)) {
+            return $this->$methodName($obj);
         }
 
-        if ($obj instanceof Transport) {
-            return $this->transformerTransport($obj);
-        }
-
-        if ($obj instanceof Place) {
-           return $this->transformerPlace($obj);
-        }
+        return '';
     }
 }

@@ -57,10 +57,11 @@ class InMemoryCardClient implements CardClientInterface
     {
         $temp = [];
         /** @var Card $card */
-        foreach ($data as $card) {
+        foreach ($data as $index => $card) {
             $temp[] = [
                 $card->getRoute()->getFrom()->getName(),
-                $card->getRoute()->getTo()->getName()
+                $card->getRoute()->getTo()->getName(),
+                $index
             ];
         }
 

@@ -5,7 +5,7 @@ namespace Dykyi;
 use Dykyi\Transformer\TransformerInterface;
 
 /**
- * Interface IPrinter
+ * Interface PrinterInterface
  * @package Dyky
  */
 interface PrinterInterface

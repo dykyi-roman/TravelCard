@@ -16,13 +16,13 @@ final class Dispatcher
      *
      * @return EventDispatcher
      */
-    public static function create(LoggerInterface $logger = null)
+    public static function create(LoggerInterface $logger = null): EventDispatcher
     {
         $eventDispatcher = new EventDispatcher();
         $listener = new Listener();
         $listener->setLogger($logger);
 
-        $eventDispatcher->addListener('save.file.action', [$listener, 'onSaveDataToFileAction']);
+        $eventDispatcher->addListener('done.action', [$listener, 'onDoneAction']);
         // Add your action here!
 
         $subscriber = new Subscriber();

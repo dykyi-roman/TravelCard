@@ -16,8 +16,7 @@ class WelcomePageCommandHandler implements CommandHandler
 {
     public function handle(Command $command)
     {
-        $textBuilder = TextBuilder::create();
-        $content = $textBuilder->add('')
+        $content = TextBuilder::create()->add('')
             ->add("**************************************************")
             ->add("************ Welcome to Application **************")
             ->add("**************************************************")
@@ -30,8 +29,6 @@ class WelcomePageCommandHandler implements CommandHandler
             ->add('')
             ->add("**************************************************");
 
-        $formatter = ConsoleFormatter::create();
-        $contentFormat = $formatter->format($content);
-        (new Response($contentFormat))->send();
+        (new Response(ConsoleFormatter::create()->format($content)))->send();
     }
 }

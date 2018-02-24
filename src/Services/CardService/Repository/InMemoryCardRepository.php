@@ -4,7 +4,6 @@ namespace Dykyi\Services\CardService\Repository;
 
 use Dykyi\Model\Card;
 use Dykyi\Model\Transport;
-use Dykyi\Transformer\Transformer;
 use Dykyi\ValueObjects\Baggage;
 use Dykyi\ValueObjects\Number;
 use Dykyi\ValueObjects\Place;
@@ -60,6 +59,6 @@ class InMemoryCardRepository implements CardRepositoryInterface
             )
         );
 
-        return [$card1, $card2, $card3, $card4];
+        return [$card4, $card3, $card2, $card1];
     }
 }

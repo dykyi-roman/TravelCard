@@ -24,7 +24,7 @@ class Route extends Printer
     public function __construct(string $from, string $to)
     {
         $this->from = new City($from);
-        $this->to = new City($to);
+        $this->to   = new City($to);
     }
 
     /**

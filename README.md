@@ -8,7 +8,7 @@ Write an API that lets you sort this kind of list and present back a description
 For instance the API should be able to take an unordered set of boarding cards, provided in a format defined by you
 
 ## API
- - **[<code>POST</code> client/card-sort/:cards](https://github.com/dykyi-roman/TravelCard/blob/master/client/README.md)**
+ - **[<code>POST</code> client/sort/:data](https://github.com/dykyi-roman/TravelCard/blob/master/client/README.md)**
  
 ## Install
 
@@ -16,10 +16,22 @@ For instance the API should be able to take an unordered set of boarding cards, 
 + change URL path to client API in .env file
  
 ## Usage
-```php
-//....
+**************************************************
+************ Welcome to Application **************
+**************************************************
 
+Usage:
+   command [options]
+
+Available commands:
+   Version    - Application version
+   BuildRoute - Build Route
+
+
+```php
+ index.php BuildRoute
 ```
+![image](https://github.com/dykyi-roman/TravelCard/blob/master/images/images/terminal.png)
 
 ## Author
 [Dykyi Roman](https://www.linkedin.com/in/roman-dykyi-43428543/), e-mail: [mr.dukuy@gmail.com](mailto:mr.dukuy@gmail.com)

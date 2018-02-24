@@ -15,6 +15,6 @@ final class WebApplication implements ApplicationInterface
     public function run()
     {
         $commandBus = CommandBus::create();
-        $commandBus->handle(new BuildRouteCommand(null, ResponseInterface::WEB));
+        $commandBus->handle(new BuildRouteCommand(ResponseInterface::WEB));
     }
 }

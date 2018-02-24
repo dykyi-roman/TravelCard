@@ -2,17 +2,16 @@
 
 namespace Dykyi\Services\CardService;
 
+use Stash\Pool;
 use Dykyi\Services\CardService\Repository\CardRepositoryInterface;
 use Dykyi\Services\Events\Dispatcher;
-use Dykyi\Services\Events\Event\SaveFileInTheStorageEvent;
 use Dykyi\Services\CardService\Clients\CardClientInterface;
-use Dykyi\Services\CardService\Storage\Storage;
 use Stash\Interfaces\DriverInterface;
-use Stash\Pool;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 
 /**
- * Class WeatherForecastService
+ * Class CardService
  * @package Dykyi\Service
  */
 class CardService
@@ -31,6 +30,7 @@ class CardService
 
     /**
      * CardService constructor.
+     *
      * @param CardRepositoryInterface $repository
      * @param CardClientInterface $client
      * @param DriverInterface $cache
@@ -43,40 +43,22 @@ class CardService
         $this->eventDispatcher = Dispatcher::create();
     }
 
-    /**
-     * @param CardRequest $request
-     * @return mixed
-     */
-    public function execute(CardRequest $request)
+    public function execute()
     {
-        //        $item = $this->cache->getItem($request->getC()->getName());
-//        if($item->isMiss()){
-//            $data = $this->client->get($request->getC()->getName());
-//            $item->lock();
-//            $item->set($data);
-//            $item->expiresAfter(getenv('CACHE_EXPIRE'));
-//            $this->cache->save($item);
-//        }
-//
-//        $result = $this->convert($item->get() ?? $data);
-
-        $cards    = $this->repository->getCards();
-        $sortCard = $this->client->cardSort($cards);
-        $this->createSaveToFileEvent($request, $sortCard);
-
-        return $sortCard;
-    }
-
-    /**
-     * @param CardRequest $request
-     * @param $data
-     */
-    private function createSaveToFileEvent(CardRequest $request, $data)
-    {
-        if (null !== $request->getOutputFile()) {
-            $storage = Storage::create($request->getOutputFileExt());
-            $event = new SaveFileInTheStorageEvent($storage, $request->getOutputFile(), $data);
-            $this->eventDispatcher->dispatch('save.file.action', $event);
+        $cards = $this->repository->getCards();
+        $item = $this->cache->getItem(md5(serialize($cards)));
+        if($item->isMiss()) {
+            $sortCard = $this->client->cardSort($cards);
+            $item->lock();
+            $item->set($sortCard);
+            $item->expiresAfter(getenv('CACHE_EXPIRE'));
+            $this->cache->save($item);
         }
+        $this->eventDispatcher->dispatch('done.action', new GenericEvent(
+            null,
+            ['message' => 'Route is build success'])
+        );
+
+        return $item->get() ?? $this->client->cardSort($cards);
     }
 }

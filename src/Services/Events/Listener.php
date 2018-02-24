@@ -2,10 +2,9 @@
 
 namespace Dykyi\Services\Events;
 
-use Dykyi\Services\Events\Event\SaveFileInTheStorageEvent;
-use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Class Listener
@@ -17,12 +16,11 @@ class Listener
     protected $logger;
 
     /**
-     * @param SaveFileInTheStorageEvent $event
+     * @param Event $event
      */
-    public function onSaveDataToFileAction(SaveFileInTheStorageEvent $event)
+    public function onDoneAction(Event $event)
     {
-        $event->getStorage()->save($event->getFileName(), $event->getData());
-        $this->logger->info('File is export');
+        $this->logger->info($event['message']);
     }
 
     /**

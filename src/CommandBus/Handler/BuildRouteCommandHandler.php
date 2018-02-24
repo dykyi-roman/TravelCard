@@ -13,7 +13,7 @@ use Stash\Driver\FileSystem;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class WeatherForecastCommandHandler
+ * Class BuildRouteCommandHandler
  * @package Dykyi\Command\Handler
  */
 class BuildRouteCommandHandler
@@ -26,8 +26,7 @@ class BuildRouteCommandHandler
     {
         try {
             $request = new CardRequest(
-                $command->getResponseFormat(),
-                $command->getOutputFile()
+                $command->getResponseFormat()
             );
 
             $service = new CardService(
@@ -36,7 +35,7 @@ class BuildRouteCommandHandler
                 new FileSystem()
             );
 
-            $sortCards = $service->execute($request);
+            $sortCards = $service->execute();
 
             $responseObject = ResponseFactory::create($request->getResponseFormat());
             $response = new Response($responseObject->response($sortCards, new Transformer()));

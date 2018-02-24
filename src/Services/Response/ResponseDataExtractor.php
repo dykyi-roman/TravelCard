@@ -6,13 +6,14 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class ResponseDataExtractor
- * @package Dykyi\Services\WeatherForecastService\Clients
+ * @package Dykyi\Services\Response
  */
 class ResponseDataExtractor implements ResponseDataExtractorInterface
 {
     /**
      * @param  ResponseInterface $response psr-7 compliant result of http request
      * @return array data extracted from RequestInterface
+     * @throws \RuntimeException
      */
     public function extract(ResponseInterface $response)
     {

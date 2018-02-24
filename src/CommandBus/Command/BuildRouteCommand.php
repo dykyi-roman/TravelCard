@@ -12,30 +12,15 @@ use SimpleBus\Command\Command;
 class BuildRouteCommand implements Command
 {
     private $responseFormat;
-    private $outputFile;
 
-    /**
-     * WeatherForecast constructor.
-     *
-     * @param null $responseFormat
-     * @param null $outputFile
-     *
-     * @throws \DomainException
-     */
-    public function __construct($outputFile = null, $responseFormat = null)
+    public function __construct($responseFormat = null)
     {
-        $this->outputFile     = $outputFile;
         $this->responseFormat = $responseFormat ?? ResponseInterface::CONSOLE;
     }
 
     public function getResponseFormat(): string
     {
         return $this->responseFormat;
-    }
-
-    public function getOutputFile()
-    {
-        return $this->outputFile;
     }
 
     public function name()

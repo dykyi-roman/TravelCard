@@ -13,5 +13,10 @@ interface ResponseInterface
     const WEB      = 'web';
     const CONSOLE  = 'cli';
 
+    /**
+     * @param array $data
+     * @param TransformerInterface $transformer
+     * @return string
+     */
     public function response(array $data, TransformerInterface $transformer): string;
 }

@@ -3,7 +3,8 @@
 namespace Dykyi\CommandBus\Handler;
 
 use Dykyi\CommandBus\Command\VersionCommand;
-use Dykyi\Response\CliResponse;
+use Dykyi\CommandBus\Formatter\ConsoleFormatter;
+use Dykyi\Helpers\TextBuilder;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -17,9 +18,8 @@ class VersionCommandHandler
      */
     public function handle(VersionCommand $command)
     {
-        $cliResponse = new CliResponse();
-        $responseText = $cliResponse->response([sprintf('Version: %s', $command::VERSION_ID)]);
+        $content = TextBuilder::create()->add(sprintf('Version: %s', $command::VERSION_ID));
 
-        (new Response($responseText))->send();
+        (new Response(ConsoleFormatter::create()->format($content)))->send();
     }
 }

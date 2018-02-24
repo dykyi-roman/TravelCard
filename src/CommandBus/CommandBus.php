@@ -34,8 +34,8 @@ final class CommandBus
     private function getEventSubscribersByEventName(): array
     {
         return [
-            WelcomePageCommand::class => WelcomePageCommandHandler::class,
             VersionCommand::class     => VersionCommandHandler::class,
+            WelcomePageCommand::class => WelcomePageCommandHandler::class,
             BuildRouteCommand::class  => BuildRouteCommandHandler::class,
         ];
     }

@@ -27,7 +27,6 @@ class Transport extends Printer
     /** @var Place */
     private $platform;
 
-
     /**
      * Transport constructor.
      *

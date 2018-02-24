@@ -10,8 +10,6 @@ use Dykyi\Printer;
  */
 class Baggage extends Printer
 {
-    const NO_BAGGAGE = '';
-
     /** @var string */
     private $info;
 

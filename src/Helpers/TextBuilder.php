@@ -39,7 +39,7 @@ final class TextBuilder
         return $this->text;
     }
 
-    public static function create()
+    public static function create(): self
     {
         return new self();
     }

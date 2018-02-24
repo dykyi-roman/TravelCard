@@ -27,7 +27,8 @@ All known errors cause the resource to return HTTP error
 
     POST api/index.php
     
-** Params **
+**Params**
+
 ``` json
   [["Stockholm","New York",0],["Gerona","Stockholm",1],["Madrid","Barcelona",2],["Barcelona","Gerona",3]]
 ```

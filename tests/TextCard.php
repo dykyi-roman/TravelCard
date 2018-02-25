@@ -14,18 +14,18 @@ class TextCard extends TestCase
     public function setUp()
     {
         $route = $this->createMock(\Dykyi\ValueObjects\Route::class);
-        $transport = $this->createMock(\Dykyi\Model\Transport::class);
-        $this->card = new \Dykyi\Model\Card($route, $transport);
+        $transport = $this->createMock(\Dykyi\Agreggates\Transport::class);
+        $this->card = new \Dykyi\Agreggates\Card($route, $transport);
     }
 
     public function testGetRouteObject()
     {
-       $this->assertInstanceOf(\Dykyi\Model\Card::class, $this->card->getRoute());
+       $this->assertInstanceOf(\Dykyi\Agreggates\Card::class, $this->card->getRoute());
     }
 
     public function testGetTransportObject()
     {
-        $this->assertInstanceOf(\Dykyi\Model\Transport::class, $this->card->getTransport());
+        $this->assertInstanceOf(\Dykyi\Agreggates\Transport::class, $this->card->getTransport());
     }
 
 }

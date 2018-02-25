@@ -12,12 +12,12 @@ class TextCardService extends TestCase
     /** @var \Dykyi\Services\CardService\CardService */
     private $service;
 
-    private function generateCard(): \Dykyi\Model\Card
+    private function generateCard(): \Dykyi\Agreggates\Card
     {
         $route = $this->createMock(\Dykyi\ValueObjects\Route::class);
-        $transport = $this->createMock(\Dykyi\Model\Transport::class);
+        $transport = $this->createMock(\Dykyi\Agreggates\Transport::class);
 
-        return new \Dykyi\Model\Card($route, $transport);
+        return new \Dykyi\Agreggates\Card($route, $transport);
     }
 
     public function setUp()
@@ -39,6 +39,6 @@ class TextCardService extends TestCase
     {
         $sortCard = $this->service->execute();
         $this->assertCount(1, $sortCard);
-        $this->assertInstanceOf(\Dykyi\Model\Card::class, $sortCard[0]);
+        $this->assertInstanceOf(\Dykyi\Agreggates\Card::class, $sortCard[0]);
     }
 }

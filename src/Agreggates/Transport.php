@@ -1,6 +1,6 @@
 <?php
 
-namespace Dykyi\Model;
+namespace Dykyi\Agreggates;
 
 use Dykyi\Printer;
 use Dykyi\ValueObjects\Number;
@@ -8,7 +8,7 @@ use Dykyi\ValueObjects\Place;
 
 /**
  * Class Transport
- * @package Dykyi\Model
+ * @package Dykyi\Agreggates
  */
 class Transport extends Printer
 {

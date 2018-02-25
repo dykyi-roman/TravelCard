@@ -1,13 +1,13 @@
 <?php
 
-namespace Dykyi\Model;
+namespace Dykyi\Agreggates;
 
 use Dykyi\Printer;
 use Dykyi\ValueObjects\Route;
 
 /**
  * Class Card
- * @package Dykyi\Model
+ * @package Dykyi\Agreggates
  */
 class Card extends Printer
 {

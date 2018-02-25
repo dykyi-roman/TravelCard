@@ -2,8 +2,8 @@
 
 namespace Dykyi\Services\CardService\Repository;
 
-use Dykyi\Model\Card;
-use Dykyi\Model\Transport;
+use Dykyi\Agreggates\Card;
+use Dykyi\Agreggates\Transport;
 use Dykyi\ValueObjects\Baggage;
 use Dykyi\ValueObjects\Number;
 use Dykyi\ValueObjects\Place;

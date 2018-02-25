@@ -4,7 +4,7 @@ namespace Dykyi\Response;
 
 use Dykyi\CommandBus\Formatter\ConsoleFormatter;
 use Dykyi\Helpers\TextBuilder;
-use Dykyi\Model\Card;
+use Dykyi\Agreggates\Card;
 use Dykyi\Transformer\Transformer;
 use Dykyi\Transformer\TransformerInterface;
 

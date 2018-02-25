@@ -2,7 +2,7 @@
 
 namespace Dykyi\Services\CardService\Clients;
 
-use Dykyi\Model\Card;
+use Dykyi\Agreggates\Card;
 use GuzzleHttp\Client as GuzzleClient;
 use Dykyi\Services\Response\ResponseDataExtractor;
 use Stash\Exception\RuntimeException;

@@ -2,8 +2,8 @@
 
 namespace Dykyi\Transformer;
 
-use Dykyi\Model\Card;
-use Dykyi\Model\Transport;
+use Dykyi\Agreggates\Card;
+use Dykyi\Agreggates\Transport;
 use Dykyi\PrinterInterface;
 use Dykyi\ValueObjects\Place;
 use Dykyi\ValueObjects\Route;

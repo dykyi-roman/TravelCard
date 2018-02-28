@@ -2,6 +2,8 @@
 
 namespace Dykyi\Services\CardService\Repository;
 
+use Dykyi\Services\CardService\CardStorage;
+
 /**
  * Interface CardRepositoryInterface
  * @package Dykyi\Services\CardService\Repository
@@ -9,7 +11,7 @@ namespace Dykyi\Services\CardService\Repository;
 interface CardRepositoryInterface
 {
     /**
-     * @return array
+     * @return CardStorage
      */
-    public function getCards(): array;
+    public function getCards(): CardStorage;
 }

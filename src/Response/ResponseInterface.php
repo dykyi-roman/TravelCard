@@ -2,6 +2,7 @@
 
 namespace Dykyi\Response;
 
+use Dykyi\Services\CardService\CardStorage;
 use Dykyi\Transformer\TransformerInterface;
 
 /**
@@ -14,9 +15,9 @@ interface ResponseInterface
     const CONSOLE  = 'cli';
 
     /**
-     * @param array $data
+     * @param CardStorage $storage
      * @param TransformerInterface $transformer
      * @return string
      */
-    public function response(array $data, TransformerInterface $transformer): string;
+    public function response(CardStorage $storage, TransformerInterface $transformer): string;
 }

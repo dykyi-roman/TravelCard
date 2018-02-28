@@ -2,6 +2,8 @@
 
 namespace Dykyi\Services\CardService\Repository;
 
+use Dykyi\Services\CardService\CardStorage;
+
 /**
  * Class PDOCardRepository
  * @package Dykyi\Services\CardService\Repository
@@ -9,11 +11,10 @@ namespace Dykyi\Services\CardService\Repository;
 class PDOCardRepository implements CardRepositoryInterface
 {
     /**
-     * @return mixed
+     * @return CardStorage
      */
-    public function getCards(): array
+    public function getCards(): CardStorage
     {
-        //TODO: get card from DB
-        return [];
+        return new CardStorage();
     }
 }

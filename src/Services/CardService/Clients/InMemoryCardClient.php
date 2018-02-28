@@ -3,6 +3,7 @@
 namespace Dykyi\Services\CardService\Clients;
 
 use Dykyi\Agreggates\Card;
+use Dykyi\Services\CardService\CardStorage;
 use GuzzleHttp\Client as GuzzleClient;
 use Dykyi\Services\Response\ResponseDataExtractor;
 use Stash\Exception\RuntimeException;
@@ -21,26 +22,26 @@ class InMemoryCardClient implements CardClientInterface
     }
 
     /**
-     * @param array $data
-     * @return array
+     * @param CardStorage $storage
+     * @return CardStorage
      *
      * @throws \Stash\Exception\RuntimeException
      */
-    public function cardSort(array $data): array
+    public function cardSort(CardStorage $storage): CardStorage
     {
         $result = [];
         $client = new GuzzleClient();
         try {
             $response = $client->request('POST', $this->options['url'], [
                 'query' => [
-                    'data' => $this->prepareToRequest($data)
+                    'data' => $this->prepareToRequest($storage)
                 ]
             ]);
 
             if ($response->getStatusCode() === 200) {
                 $extractor = new ResponseDataExtractor();
                 $content = $extractor->extract($response);
-                $result = $this->parsingResponce($data, $content);
+                $result = $this->parsingResponce($storage, $content);
             }
         } catch (\Exception $exception) {
             throw new RuntimeException($exception->getMessage());
@@ -50,14 +51,14 @@ class InMemoryCardClient implements CardClientInterface
     }
 
     /**
-     * @param array $data
+     * @param CardStorage $storage
      * @return string
      */
-    private function prepareToRequest(array $data): string
+    private function prepareToRequest(CardStorage $storage): string
     {
         $temp = [];
         /** @var Card $card */
-        foreach ($data as $index => $card) {
+        foreach ($storage as $index => $card) {
             $temp[] = [
                 $card->getRoute()->getFrom()->getName(),
                 $card->getRoute()->getTo()->getName(),
@@ -69,17 +70,16 @@ class InMemoryCardClient implements CardClientInterface
     }
 
     /**
-     * @param array $data
+     * @param CardStorage $storage
      * @param array $position
-     * @return array
+     * @return CardStorage
      */
-    private function parsingResponce(array $data, array $position)
+    private function parsingResponce(CardStorage $storage, array $position)
     {
-        $newArray = [];
-        foreach ($position as $i) {
-            $newArray[] = $data[$i];
+        $newCardStorage = new CardStorage();
+        foreach ($position as $index => $i) {
+            $newCardStorage->set($index, $storage->get($i));
         }
-
-        return $newArray;
+        return $newCardStorage;
     }
 }

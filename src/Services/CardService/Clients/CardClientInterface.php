@@ -2,6 +2,8 @@
 
 namespace Dykyi\Services\CardService\Clients;
 
+use Dykyi\Services\CardService\CardStorage;
+
 /**
  * Interface CardClientInterface
  * @package Dykyi\Clients
@@ -9,8 +11,8 @@ namespace Dykyi\Services\CardService\Clients;
 interface CardClientInterface
 {
     /**
-     * @param array $data
+     * @param CardStorage $data
      * @return mixed
      */
-    public function cardSort(array $data);
+    public function cardSort(CardStorage $data): CardStorage;
 }

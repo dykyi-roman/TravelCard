@@ -4,6 +4,7 @@ namespace Dykyi\Services\CardService\Repository;
 
 use Dykyi\Agreggates\Card;
 use Dykyi\Agreggates\Transport;
+use Dykyi\Services\CardService\CardStorage;
 use Dykyi\ValueObjects\Baggage;
 use Dykyi\ValueObjects\Number;
 use Dykyi\ValueObjects\Place;
@@ -18,9 +19,9 @@ class InMemoryCardRepository implements CardRepositoryInterface
     /**
      * @return mixed
      */
-    public function getCards(): array
+    public function getCards(): CardStorage
     {
-
+        $cardSorage = new CardStorage();
         $card1 = new Card(
             new Route('Barcelona','Gerona'),
             new Transport(
@@ -59,6 +60,11 @@ class InMemoryCardRepository implements CardRepositoryInterface
             )
         );
 
-        return [$card4, $card3, $card2, $card1];
+        $cardSorage->set(0,$card4);
+        $cardSorage->set(1,$card3);
+        $cardSorage->set(2,$card2);
+        $cardSorage->set(3,$card1);
+
+        return $cardSorage;
     }
 }
